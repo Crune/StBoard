@@ -6,14 +6,27 @@
 	<!-- 용량제한 100MB 로 설정. -->
 	<constant name="struts.multipart.maxSize" value="104857600" />
 
-	<constant name="struts.action.extension" value="action" />
+	<constant name="struts.action.extension" value="do" />
 
 	<package name="board" extends="struts-default">
 
+		<interceptors>
+			<interceptor name="ibatis" class="board.core.IbatisInterceptor" />			
+			<interceptor-stack name="basicStack">
+				<interceptor-ref name="ibatis" />
+				<interceptor-ref name="exception" />
+				<interceptor-ref name="servletConfig" />
+				<interceptor-ref name="prepare" />
+				<interceptor-ref name="modelDriven" />
+				<interceptor-ref name="params" />
+			</interceptor-stack>
+		</interceptors>
+		
 		<!-- 글로벌 예외 처리 화면 설정 -->
 
 		<!-- 게시판 리스트 액션. -->
-		<action name="listAction" class="board.listAction">
+		<action name="list" class="board.action.list.ListAction">
+			<interceptor-ref name="basicStack" />
 			<result>/board/boardList.jsp</result>
 		</action>
 
@@ -22,14 +35,14 @@
 			<result>/board/boardWrite.jsp</result>
 		</action>
 
-		<action name="writeAction" class="board.writeAction">
+		<action name="write" class="board.writeAction">
 			<result type="redirect-action">
-				<param name="actionName">listAction</param>
+				<param name="actionName">list</param>
 			</result>
 		</action>
 
 		<!-- 게시판 상세보기 액션. -->
-		<action name="viewAction" class="board.viewAction">
+		<action name="view" class="board.viewAction">
 			<result>/board/boardView.jsp</result>
 		</action>
 
@@ -51,7 +64,7 @@
 			<result>/board/checkPassword.jsp</result>
 		</action>
 
-		<action name="checkAction" class="board.viewAction" method="checkAction">
+		<action name="check" class="board.viewAction" method="checkAction">
 			<result name="error">/board/checkError.jsp</result>
 			<result>/board/checkSuccess.jsp</result>
 		</action>
@@ -61,12 +74,12 @@
 			<result type="chain">writeForm</result>
 		</action>
 
-		<action name="modifyAction" class="board.modifyAction">
+		<action name="modify" class="board.modifyAction">
 			<result type="chain">viewAction</result>
 		</action>
 
 		<!-- 게시판 삭제 액션. -->
-		<action name="deleteAction" class="board.deleteAction">
+		<action name="delete" class="board.deleteAction">
 			<result type="chain">listAction</result>
 		</action>
 	</package>
