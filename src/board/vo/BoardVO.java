@@ -4,6 +4,13 @@ import java.util.Date;
 
 public class BoardVO {
 
+	@Override
+	public String toString() {
+		return "BoardVO [no=" + no + ", subject=" + subject + ", name=" + name + ", password=" + password + ", content="
+				+ content + ", file_orgname=" + file_orgname + ", file_savname=" + file_savname + ", readhit=" + readhit
+				+ ", regdate=" + regdate + "]";
+	}
+
 	private int no;
 	private String subject;
 	private String name;
@@ -84,6 +91,18 @@ public class BoardVO {
 
 	public void setFile_savname(String file_savname) {
 		this.file_savname = file_savname;
+	}
+
+	public void modify(BoardVO n) {
+		no = n.getNo();
+		subject = n.getSubject();
+		name = n.getName();
+		password = n.getPassword();
+		content = n.getContent();
+		file_orgname = n.getFile_orgname();
+		file_savname = n.getFile_savname();
+		readhit = n.getReadhit();
+		regdate = n.getRegdate();
 	}
 
 }

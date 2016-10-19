@@ -1,20 +1,23 @@
 package board.vo;
 
-public class Page {
+public class Paging {
 
 	private int currentPage = 1;   // 현재페이지
 	private int totalCount;	 // 전체 게시물 수
 	private int totalPage;	 // 전체 페이지 수
+	
 	private int blockCount;	 // 한 페이지의  게시물의 수
 	private int blockPage;	 // 한 화면에 보여줄 페이지 수
+	
 	private int startCount;	 // 한 페이지에서 보여줄 게시글의 시작 번호
 	private int endCount;	 // 한 페이지에서 보여줄 게시글의 끝 번호
+	
 	private int startPage;	 // 시작 페이지
 	private int endPage;	 // 마지막 페이지
 
 	private StringBuffer toHtml;
 	
-	public Page(int blockCount, int blockPage) {
+	public Paging(int blockCount, int blockPage) {
 		this.blockCount = blockCount;
 		this.blockPage = blockPage;
 	}
@@ -69,8 +72,7 @@ public class Page {
 				toHtml.append(i);
 				toHtml.append("</font></b>");
 			} else {
-				toHtml
-						.append("&nbsp;<a href='list.do?currentPage=");
+				toHtml.append("&nbsp;<a href='list.do?currentPage=");
 				toHtml.append(i);
 				toHtml.append("'>");
 				toHtml.append(i);

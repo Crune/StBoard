@@ -1,4 +1,4 @@
-package board.action.list;
+package board.action;
 
 import java.util.List;
 import javax.servlet.http.HttpSession;
@@ -8,26 +8,26 @@ import com.opensymphony.xwork2.Preparable;
 
 import board.core.IbatisActionSupport;
 import board.vo.BoardVO;
-import board.vo.Page;
+import board.vo.Paging;
 
 public class ListAction
 	extends IbatisActionSupport
-	implements Preparable, ModelDriven<Page> {
+	implements Preparable, ModelDriven<Paging> {
 
 	private static final long serialVersionUID = 5290847131490975688L;
 
 	private static final int blockCount = 10; // 한 페이지의  게시물의 수
 	private static final int blockPage = 5; // 한 화면에 보여줄 페이지 수
 
-	private Page page; // 페이징 클래스
+	private Paging page; // 페이징 클래스
 
 	@Override
 	public void prepare() throws Exception {
-		page = new Page(blockCount, blockPage); // pagingAction 객체 생성.
+		page = new Paging(blockCount, blockPage); // pagingAction 객체 생성.
 	}
 
 	@Override
-	public Page getModel() {
+	public Paging getModel() {
 		return this.page;
 	}
 
@@ -39,8 +39,8 @@ public class ListAction
 	@SuppressWarnings("unchecked")
 	@Override
 	public String execute() throws Exception {
-		HttpSession session = request.getSession();
-		session.setAttribute("currentPage", page.getCurrentPage());
+		// 현재 페이지를 세션에 저장한다.
+		sMap.put("currentPage", page.getCurrentPage());
 		
 		// 모든 글을 가져와 list에 넣는다.
 		list = sqlMap.queryForList("selectAll");

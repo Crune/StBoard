@@ -1,21 +1,22 @@
-<%@ page contentType="text/html; charset=utf-8" %>
-<%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<title>비밀번호 확인</title>
-	<link rel="stylesheet" href="/StrutsBoard/board/common/css/css.css" type="text/css">
+	<link rel="stylesheet" href="${path}/board/common/css/css.css" type="text/css" />
 </head>
   
   <body>
   
   	<h2>비밀번호 확인</h2>
   	
-  	<form action="checkAction.action" method="post">
-  	<s:hidden name="no" value="%{no}" />
-  	<s:hidden name="currentPage" value="%{currentPage}" />
+  	<form action="check.do" method="post">
+  	<input type="hidden" name="no" value="${no}" />
+  	<input type="hidden" name="currentPage" value="${currentPage}" />
   		
   	<table width="250" border="0" cellspacing="0" cellpadding="0">
       
@@ -26,8 +27,8 @@
       <tr>
         <td width="100" bgcolor="#F4F4F4">  비밀번호 입력</td>
         <td width="150" bgcolor="#FFFFFF">
-          &nbsp;&nbsp;<s:textfield name="password" theme="simple" cssStyle="width:100px" maxlength="20"/>
-          &nbsp;&nbsp;<input name="submit" type="submit" value="확인" class="inputb">
+          &nbsp;&nbsp;<input type="text" name="password" maxlength="20" value="" id="password" style="width:85px"/>
+          &nbsp;&nbsp;<input name="submit" type="submit" value="확인" class="inputb" />
         </td>
       </tr>
       

@@ -23,33 +23,24 @@
 		</interceptors>
 		
 		<!-- 글로벌 예외 처리 화면 설정 -->
+		
 
 		<!-- 게시판 리스트 액션. -->
-		<action name="list" class="board.action.list.ListAction">
+		<action name="list" class="board.action.ListAction">
 			<interceptor-ref name="basicStack" />
 			<result>/board/boardList.jsp</result>
 		</action>
-
-		<!-- 게시판 쓰기 액션. -->
-		<action name="writeForm" class="board.writeAction" method="form">
-			<result>/board/boardWrite.jsp</result>
-		</action>
-
-		<action name="write" class="board.writeAction">
-			<result type="redirect-action">
-				<param name="actionName">list</param>
-			</result>
-		</action>
-
+		
+		
 		<!-- 게시판 상세보기 액션. -->
-		<action name="view" class="board.viewAction">
+		<action name="view" class="board.action.ViewAction">
+			<interceptor-ref name="basicStack" />
 			<result>/board/boardView.jsp</result>
 		</action>
 
-
 		<!-- 파일 다운로드 액션. -->
-		<action name="fileDownloadAction" class="board.viewAction"
-			method="download">
+		<action name="down" class="board.action.DownloadAction">
+			<interceptor-ref name="basicStack" />
 			<result name="success" type="stream">
 				<param name="contentType">binary/octet-stream</param>
 				<param name="inputName">inputStream</param>
@@ -60,27 +51,48 @@
 		</action>
 
 		<!-- 비밀번호 체크 액션. -->
-		<action name="checkForm" class="board.viewAction" method="checkForm">
+		<action name="checkForm" class="board.action.BlankAction">
+			<interceptor-ref name="basicStack" />
 			<result>/board/checkPassword.jsp</result>
 		</action>
 
-		<action name="check" class="board.viewAction" method="checkAction">
+		<action name="check" class="board.action.CheckAction">
+			<interceptor-ref name="basicStack" />
 			<result name="error">/board/checkError.jsp</result>
 			<result>/board/checkSuccess.jsp</result>
 		</action>
 
+
 		<!-- 게시판 수정 액션. -->
-		<action name="modifyForm" class="board.viewAction">
-			<result type="chain">writeForm</result>
+		<action name="modifyForm" class="board.action.ViewAction">
+			<interceptor-ref name="basicStack" />
+			<result>/board/boardWrite.jsp</result>
 		</action>
 
-		<action name="modify" class="board.modifyAction">
-			<result type="chain">viewAction</result>
+		<action name="modify" class="board.action.ModifyAction">
+			<interceptor-ref name="basicStack" />
+			<result type="chain">view</result>
 		</action>
+
 
 		<!-- 게시판 삭제 액션. -->
-		<action name="delete" class="board.deleteAction">
-			<result type="chain">listAction</result>
+		<action name="delete" class="board.action.DeleteAction">
+			<interceptor-ref name="basicStack" />
+			<result type="chain">list</result>
+		</action>
+
+
+		<!-- 게시판 쓰기 액션. -->
+		<action name="writeForm" class="board.action.BlankAction">
+			<interceptor-ref name="basicStack" />
+			<result>/board/boardWrite.jsp</result>
+		</action>
+
+		<action name="write" class="board.action.WriteAction">
+			<interceptor-ref name="basicStack" />
+			<result type="redirect-action">
+				<param name="actionName">list</param>
+			</result>
 		</action>
 	</package>
 </struts>
